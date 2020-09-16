@@ -1,15 +1,22 @@
-<html>
+<!DOCTYPE html>
+<html lang="en-US">
+    <meta charset="utf-8">
     <head>
         <script type="text/javascript" src="index.js"></script>
         <link type="text/css" rel="stylesheet" href="index.css">
     </head>
 
     <body>
+        <h1 class="centered">Crossword arranger</h1>
         <div id="wrapper">
             <div id="mode-switch-buttons">
+                <!-- Don't change these button ids. Active button is changed using them -->
                 <button id="button-edit-hint">hint</button>
                 <button id="button-edit-type">type</button>
-                <button id="button-edit-char">char</button>
+                <button id="button-edit-char" class="active-button">char</button>
+            </div>
+            <div id="mode-description">
+
             </div>
         </div>
     </body>

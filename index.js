@@ -2,7 +2,6 @@
 //XXX: Start over button
 //XXX: Save
 //XXX: Versioned save
-//XXX: Display current mode
 
 /* No need to set input tags to read-only when not in chr/letter mode as
    clicking would lead to other changes anyway */
@@ -126,7 +125,7 @@ class Crossword {
             return true;
         }
 
-        // Changes to revert to original state if needed
+        // Changes to be made to revert to original state if needed
         if(this.mode == "hint") {
             let cells = document.getElementsByClassName('cell');
             Array.from(cells).forEach(cell => {
@@ -150,6 +149,8 @@ class Crossword {
         } else if(newMode!="type" && newMode!="char") {
             return false;
         }
+        let modeDescriptionDiv = document.getElementById("mode-description");
+        modeDescriptionDiv.innerHTML = modeDescriptions[crossword.mode];
         this.mode = newMode;
         return true;
     }
@@ -198,6 +199,12 @@ function handleModeChangeClick(event) {
      *  mode.
      */
     let target = event.currentTarget;
+    let currentActiveButtonId = "button-edit-" + crossword.mode;
+    if(currentActiveButtonId == target.id) {
+        return false;   // old mode itself
+    }
+    let currentActiveButton = document.getElementById(currentActiveButtonId);
+    currentActiveButton.classList.toggle("active-button");
     console.log(target.id);
     if(target.id == "button-edit-hint") {
         crossword.changeMode("hint");
@@ -206,14 +213,33 @@ function handleModeChangeClick(event) {
     } else if(target.id == "button-edit-char") {
         crossword.changeMode("char");
     }
+    target.classList.toggle("active-button");
+    return true;
 }
 
-var crossword;  // global variable
-window.addEventListener('DOMContentLoaded', initUI);
+// global variables
+var crossword;
+const hintModeDescription = `
+Click on a cell to add or edit the hint number it contains.
+`;
+const typeModeDescription = `
+Click on a cell to toggle between solid, empty and editable state.
+`;
+const charModeDescription = `
+Click on a cell to edit its text content.
+`;
+const modeDescriptions = {
+    // key values are possible values of `Crossword.mode`
+    'hint': hintModeDescription,
+    'type': typeModeDescription,
+    'char': charModeDescription
+};
 
-function initUI(event) {
+window.addEventListener('DOMContentLoaded', initCrosswordUI);
+
+function initCrosswordUI(event) {
     /*
-     * Initialize the UI
+     * Initialize and display the crossword's UI
      */
     const rows = 7;
     const cols = 6;
@@ -221,9 +247,11 @@ function initUI(event) {
     //crossword = new Crossword(3, 4);    
     crosswordNode = crossword.createDOM();
     crosswordNode.style.gridTemplateColumns = "repeat(" + cols + ", 1fr)";
-    document.getElementById("wrapper").appendChild(crosswordNode);
+    document.getElementById("wrapper").prepend(crosswordNode);
     modeSwitchButtons = document.getElementById("mode-switch-buttons");
     Array.from(modeSwitchButtons.children).forEach(button => {
         button.addEventListener('click', handleModeChangeClick);
     });
+    let modeDescriptionDiv = document.getElementById("mode-description");
+    modeDescriptionDiv.innerHTML = modeDescriptions[crossword.mode];
 }

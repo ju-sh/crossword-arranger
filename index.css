@@ -18,7 +18,6 @@
 
 input {
     background: transparent;
-    //border: 1px solid blue;
     border: none;
 }
 .letter {
@@ -31,6 +30,16 @@ input {
     opacity: 0;
 }
 
-#mode-switch-buttons {
+h1 {
+    text-align: center;
+}
+
+.active-button {
+    border: 4px inset silver;
+    border-radius: 25%;
+}
+
+#mode-switch-buttons, #mode-description {
     padding: 2%;
+    text-align: center;
 }
