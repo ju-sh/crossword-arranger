@@ -235,18 +235,35 @@ const modeDescriptions = {
     'char': charModeDescription
 };
 
-window.addEventListener('DOMContentLoaded', initCrosswordUI);
+window.addEventListener('DOMContentLoaded', initUI);
+
+function initUI(event) {
+    console.log("init UI");
+    let form = document.getElementById("accept-input");
+    form.addEventListener('submit', initCrosswordUI);
+}
 
 function initCrosswordUI(event) {
     /*
      * Initialize and display the crossword's UI
      */
-    const rows = 7;
-    const cols = 6;
+    console.log("form submit event received.");
+    event.preventDefault();
+    console.log("Prevented default form submit action.");
+
+    const rows = parseInt(document.getElementById("input-rows").value);
+    const cols = parseInt(document.getElementById("input-cols").value);
+    console.log("Rows: " + rows + ", Cols: " + cols);
     crossword = new Crossword(rows, cols);    
     //crossword = new Crossword(3, 4);    
     crosswordNode = crossword.createDOM();
     crosswordNode.style.gridTemplateColumns = "repeat(" + cols + ", 1fr)";
+
+    // Hide input acceptance blocks
+    let acceptInput = document.getElementById("accept-input");
+    acceptInput.style.display = "none";
+
+    // Add crossword node
     document.getElementById("wrapper").prepend(crosswordNode);
     modeSwitchButtons = document.getElementById("mode-switch-buttons");
     Array.from(modeSwitchButtons.children).forEach(button => {
@@ -254,4 +271,9 @@ function initCrosswordUI(event) {
     });
     let modeDescriptionDiv = document.getElementById("mode-description");
     modeDescriptionDiv.innerHTML = modeDescriptions[crossword.mode];
+
+    // Reveal mode switch buttons and mode description
+    modeSwitchButtons.classList.toggle("no-display");
+    modeDescriptionDiv.classList.toggle("no-display")
+    console.log("Reveal modeSwitchButtons and modeDescriptionDiv");
 }

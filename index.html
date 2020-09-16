@@ -9,14 +9,20 @@
     <body>
         <h1 class="centered">Crossword arranger</h1>
         <div id="wrapper">
-            <div id="mode-switch-buttons">
+            <form id="accept-input">
+                <label>Rows:</label>
+                <input for="input-rows" id="input-rows" type="number" inputmode="numeric" placeholder="rows" required value=3 />
+                <label for="input-cols">Columns:</label>
+                <input id="input-cols" type="number" inputmode="numeric" placeholder="columns" required value=3 />
+                <button type="submit">Create</button>
+            </form>
+            <div id="mode-switch-buttons" class="no-display">
                 <!-- Don't change these button ids. Active button is changed using them -->
                 <button id="button-edit-hint">hint</button>
                 <button id="button-edit-type">type</button>
                 <button id="button-edit-char" class="active-button">char</button>
             </div>
-            <div id="mode-description">
-
+            <div id="mode-description" class="no-display">
             </div>
         </div>
     </body>
