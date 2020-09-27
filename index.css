@@ -1,3 +1,9 @@
+@media print {
+    body {
+       color-adjust: exact;
+    }
+}
+
 #crossword {
     display: grid;
     padding: 2%;
