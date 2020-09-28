@@ -163,9 +163,9 @@ class Crossword {
         } else if(newMode!="type") {
             return false;
         }
+        this.mode = newMode;
         let modeDescriptionDiv = document.getElementById("mode-description");
         modeDescriptionDiv.innerHTML = modeDescriptions[crossword.mode];
-        this.mode = newMode;
         return true;
     }
     
