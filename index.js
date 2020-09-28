@@ -136,13 +136,21 @@ class Crossword {
                 cell.children[0].style.visibility = "visible";   //span tag with hint-num
             });
         }
-        if(this.mode == "char") {
+        if(newMode == "type") {
             // Make cell input text tags read-only
             let letterInputs = document.getElementsByClassName('letter');
             Array.from(letterInputs).forEach(letterInput => {
                 letterInput.readOnly = true;
             });
             console.log("Made cells read-only");
+        }
+        if(this.mode == "type") {
+            // Make cell input text tags non read-only
+            let letterInputs = document.getElementsByClassName('letter');
+            Array.from(letterInputs).forEach(letterInput => {
+                letterInput.readOnly = false;
+            });
+            console.log("Made cells non read-only");
         }
 
         if(newMode == "hint") {
@@ -153,14 +161,7 @@ class Crossword {
                 this.cells[idx].chr = cell.children[1].value;
                 cell.children[1].value = this.cells[idx].hintNum;
             });
-        } else if(newMode == "char") {
-            // Make cell input text tags non read-only
-            let letterInputs = document.getElementsByClassName('letter');
-            Array.from(letterInputs).forEach(letterInput => {
-                letterInput.readOnly = false;
-            });
-            console.log("Made cells non read-only");
-        } else if(newMode!="type") {
+        } else if(newMode!="char" && newMode!="type") {
             return false;
         }
         this.mode = newMode;
