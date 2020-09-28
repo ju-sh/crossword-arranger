@@ -1,6 +1,10 @@
 @media print {
     body {
-       color-adjust: exact;
+        color-adjust: exact;
+    }
+    
+    .no-print {
+        display: none;
     }
 }
 
